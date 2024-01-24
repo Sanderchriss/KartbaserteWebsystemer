@@ -7,13 +7,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
     "build": "npm run check && vite build",
-    "check": "prettier --check . && tsc --noEmit"
+    "check": "prettier --check . && tsc --noEmit",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
+    "husky": "^8.0.3",
     "prettier": "^3.2.4",
     "typescript": "^5.3.3",
     "vite": "^5.0.12"
