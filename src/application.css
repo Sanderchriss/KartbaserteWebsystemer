@@ -1,0 +1,45 @@
+* {
+  margin: unset;
+}
+
+dialog {
+  margin: revert;
+}
+
+#root {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  height: 100dvh;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+nav {
+  display: flex;
+  gap: 0.5em;
+}
+
+nav,
+header {
+  padding: 0 0.25rem;
+}
+
+main aside {
+  display: grid;
+  grid-template-columns: 0;
+  transition: grid-template-columns 0.5s ease-out;
+  overflow-x: clip;
+  overflow-y: auto;
+  max-height: calc(100dvh - 100px);
+}
+
+main aside.visible {
+  grid-template-columns: 1fr;
+}
+
+main aside > * {
+  padding: 0.25rem;
+}
