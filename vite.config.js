@@ -1,3 +1,3 @@
 export default {
-  base: "/KartbaserteWebsystemer",
+  base: "/KartbaserteWebsystemer/tree/master",
 };
