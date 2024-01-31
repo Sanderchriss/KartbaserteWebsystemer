@@ -1,8 +1,4 @@
 {
-  "name": "emptymap",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
@@ -11,8 +7,6 @@
     "check": "prettier --check . && tsc --noEmit",
     "prepare": "husky install"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
