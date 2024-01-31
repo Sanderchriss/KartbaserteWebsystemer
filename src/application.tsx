@@ -1,20 +1,32 @@
-import React, { MutableRefObject, useEffect, useRef } from "react";
+import React, { useMemo } from "react";
+import "./application.css";
+import { MapView } from "./Map";
 import { Map, View } from "ol";
 import TileLayer from "ol/layer/Tile";
 import { OSM } from "ol/source";
 import { useGeographic } from "ol/proj";
-import "./application.css";
 import "ol/ol.css";
 
 useGeographic();
 
-const map = new Map({
-  layers: [new TileLayer({ source: new OSM() })],
-  view: new View({ center: [10, 59], zoom: 8 }),
-});
-
 export function Application() {
-  const mapRef = useRef() as MutableRefObject<HTMLDivElement>;
-  useEffect(() => map.setTarget(mapRef.current), []);
-  return <div ref={mapRef}></div>;
+  const map = useMemo(
+    () =>
+      new Map({
+        layers: [new TileLayer({ source: new OSM() })],
+        view: new View({ center: [10, 60], zoom: 8 }),
+      }),
+    [],
+  );
+  return (
+    <>
+      <header>
+        <h1></h1>Norges vakreste kart
+      </header>
+      <nav>
+        <a href={"#"}>Zoomer</a>
+      </nav>
+      <MapView map={map} />
+    </>
+  );
 }
