@@ -5,6 +5,7 @@ import { Map, View } from "ol";
 import TileLayer from "ol/layer/Tile";
 import { OSM } from "ol/source";
 import { useGeographic } from "ol/proj";
+import { KommuneLayerCheckbox } from "./kommune/kommuneLayerCheck";
 import "ol/ol.css";
 
 useGeographic();
@@ -25,6 +26,7 @@ export function Application() {
       </header>
       <nav>
         <a href={"#"}>Zoomer</a>
+        <KommuneLayerCheckbox />
       </nav>
       <MapView map={map} />
     </>
