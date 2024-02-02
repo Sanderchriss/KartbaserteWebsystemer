@@ -1,35 +1,42 @@
 import React, {
   Dispatch,
+  MutableRefObject,
   SetStateAction,
   useEffect,
-  useMemo,
+  useRef,
   useState,
 } from "react";
 import { Layer } from "ol/layer";
-import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
-import { GeoJSON } from "ol/format";
+import { Map } from "ol";
+import { KommuneNavn } from "./kommune";
+import { useKommuneLayer } from "./useKommuneLayer";
 
 export function KommuneLayerCheckbox({
+  map,
   setLayers,
 }: {
+  map: Map;
   setLayers: Dispatch<SetStateAction<Layer[]>>;
 }) {
+  const dialogRef = useRef() as MutableRefObject<HTMLDialogElement>;
   const [checked, setChecked] = useState(false);
-  const kommuneLayer = useMemo(() => {
-    return new VectorLayer({
-      source: new VectorSource({
-        url: "/KartbaserteWebsystemer/kommuner.json",
-        format: new GeoJSON(),
-      }),
-    });
-  }, []);
+  const { layer, clickedFeature } = useKommuneLayer(checked, map);
+
+  useEffect(() => {
+    if (clickedFeature) {
+      dialogRef.current.showModal();
+    }
+  }, [clickedFeature]);
+
   useEffect(() => {
     if (checked) {
-      setLayers((old) => [...old, kommuneLayer]);
+      setLayers((old) => [...old, layer]);
     }
-    return () => setLayers((old) => old.filter((l) => l !== kommuneLayer));
+    return () => {
+      setLayers((old) => old.filter((l) => l !== layer));
+    };
   }, [checked]);
+
   return (
     <div>
       <label>
@@ -40,6 +47,19 @@ export function KommuneLayerCheckbox({
         />
         {checked ? "Hide" : "Show"} kommuner
       </label>
+      <dialog ref={dialogRef}>
+        <h2>Valgt kommune</h2>
+        <div>
+          {
+            clickedFeature
+              ?.getProperties()
+              ?.navn?.find((n: KommuneNavn) => n.sprak === "nor")?.navn
+          }
+        </div>
+        <div>
+          <button onClick={() => dialogRef.current.close()}>Close</button>
+        </div>
+      </dialog>
     </div>
   );
 }
